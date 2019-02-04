@@ -61,12 +61,12 @@ async function callService() {
   if (window.localmode) {
     apply({ type: "local-service/clear" });
   }
-  const service = window.localmode ? local : services;
+  const backend = window.localmode ? local : services;
   let colorIndex = 0;
-  for (let { name, app } of await service.getAllServices()) {
+  for (let { name, service } of await backend.getAllServices()) {
     const color = colors[colorIndex++];
     try {
-      const tile = await service.getServiceResult(app);
+      const tile = await backend.getServiceResult(service);
 
       const validation = await validate(tile);
       if (isValid(validation)) {
