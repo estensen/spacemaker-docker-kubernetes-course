@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spacemaker-go-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spacemaker-go-pod
+  template:
+    metadata:
+      labels:
+        app: spacemaker-go-pod
+    spec:
+      containers:
+        - name: spacemaker-go-container
+          resources:
+            limits:
+              cpu: 200m
+              memory: 300Mi
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          image: estensen/spacemaker-go
+          imagePullPolicy: Always
+          ports:
+            - containerPort: # add container port here
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: spacemaker-go-pod
+spec:
+  selector:
+    app: spacemaker-go-pod
+  ports:
+    - protocol: TCP
+      port: 8000
