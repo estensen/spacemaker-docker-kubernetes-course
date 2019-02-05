@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: # add deployment name here
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: # add pod label here
+  template:
+    metadata:
+      labels:
+        app: # add pod label here
+    spec:
+      containers:
+        - name: # add container name here
+          resources:
+            limits:
+              cpu: 200m
+              memory: 300Mi
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          image: # add docker image name here
+          imagePullPolicy: Always
+          ports:
+            - containerPort: # add container port here
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: # add service name here
+spec:
+  selector:
+    app: # add pod label here
+  ports:
+    - protocol: TCP
+      port: # add container port here
